@@ -7,20 +7,23 @@ datasource db {
 }
 
 generator client {
+  // provider = "prisma-client-js"
   provider = "go run github.com/prisma/prisma-client-go"
 }
 
 model User {
-  id        String   @id @default(cuid())
-  firstname String
-  lastname  String
-  email     String
-  phone     String
-  address   String
-  jobs      Job[]
-  skills    Skill[]
-  updatedAt DateTime @default(now())
-  createdAt DateTime @default(now())
+  id             String          @id @default(cuid())
+  firstname      String
+  lastname       String
+  email          String
+  phone          String
+  address        String
+  jobs           Job[]
+  skills         Skill[]
+  list           List[]
+  educationItems EducationItem[]
+  updatedAt      DateTime        @default(now())
+  createdAt      DateTime        @default(now())
 }
 
 model Job {
@@ -47,6 +50,8 @@ model EducationItem {
   endDate         DateTime?
   referenceId     String    @default("")
   url             String    @default("")
+  user            User?     @relation(fields: [userId], references: [id])
+  userId          String?
   updatedAt       DateTime  @default(now())
   createdAt       DateTime  @default(now())
 }
@@ -68,6 +73,8 @@ model List {
   content   String
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 enum ProficiencyType {
