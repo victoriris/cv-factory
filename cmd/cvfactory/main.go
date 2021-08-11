@@ -1,47 +1,59 @@
 package main
 
 import (
-	"context"
+	"encoding/json"
 	"html/template"
-	"net/http"
+	"io/ioutil"
 	"os"
-
-	"github.com/gin-gonic/gin"
-	"github.com/victormidp/cv-factory/prisma/db"
 )
 
-func getUsers(c *gin.Context) {
-	client := db.NewClient()
-	if err := client.Prisma.Connect(); err != nil {
-		panic(err)
-	}
-	ctx := context.Background()
-
-	users, err := client.User.FindMany().Exec(ctx)
-	if err != nil {
-		panic(err)
-	}
-	c.IndentedJSON(http.StatusOK, users)
+type EducationItem struct {
+	Title           string `json: "title"`
+	Description     string `json: "description"`
+	InstitutionName string `json: "institutionName"`
+	Location        string `json: "location"`
+	StartDate       string `json: "startDate"`
+	EndDate         string `json: "endDate"`
+	ReferenceId     string `json: "referenceId"`
+	Url             string `json: "url"`
 }
 
-func createDocument(c *gin.Context) {
-	client := db.NewClient()
-	if err := client.Prisma.Connect(); err != nil {
-		panic(err)
-	}
-	ctx := context.Background()
+type List struct {
+	Name    string `json: "name"`
+	Content string `json: "content"`
+}
 
-	user, err := client.User.FindFirst(
-		db.User.ID.Equals("ckrii17890000m6vr4idf6yxj"),
-	).With(
-		db.User.Jobs.Fetch(),
-		db.User.Skills.Fetch(),
-		db.User.List.Fetch(),
-		db.User.EducationItems.Fetch(),
-	).Exec(ctx)
-	if err != nil {
-		panic(err)
-	}
+type Skill struct {
+	Name        string `json: "name"`
+	Description string `json: "description"`
+	Proficiency string `json: "proficiency"`
+}
+
+type Job struct {
+	Title       string `json: "title"`
+	Description string `json: "description"`
+	CompanyName string `json: "companyName"`
+	Location    string `json: "location"`
+	StartDate   string `json: "startDate"`
+	EndDate     string `json: "endDate"`
+}
+
+type UserData struct {
+	Firstname      string          `json: "firstname"`
+	Lastname       string          `json: "lastname"`
+	Email          string          `json: "email"`
+	Phone          string          `json: "phone"`
+	Address        string          `json: "address"`
+	Jobs           []Job           `json: "jobs"`
+	Skills         []Skill         `json: "skills"`
+	Lists          []List          `json: "lists"`
+	EducationItems []EducationItem `json: "educationItems"`
+}
+
+func main() {
+	file, _ := ioutil.ReadFile("sample-data.json")
+	data := UserData{}
+	_ = json.Unmarshal([]byte(file), &data)
 
 	tmpl := template.Must(template.ParseFiles("example/index.html"))
 	cv, err := os.Create("example/output.html")
@@ -49,24 +61,5 @@ func createDocument(c *gin.Context) {
 		panic(err)
 	}
 
-	tmpl.Execute(cv, user)
-	c.IndentedJSON(http.StatusOK, user)
-}
-
-func main() {
-	router := gin.Default()
-	router.GET("/users", getUsers)
-
-	// Document
-	router.POST("/document", createDocument)
-
-	// router.POST("/job", todo)
-	// router.POST("/education-item", todo)
-	// router.POST("/skill", todo)
-	// router.POST("/list", todo)
-	// router.POST("/login", todo)
-	// router.POST("/refresh", todo)
-
-	// Run service
-	router.Run(("localhost:8000"))
+	tmpl.Execute(cv, data)
 }

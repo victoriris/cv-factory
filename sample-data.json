@@ -1,0 +1,42 @@
+{
+	"firstname": "John",
+	"lastname": "Doe",
+	"email": "jdoe@test.com",
+	"phone": "0123456789",
+	"address": "Mexico",
+	"jobs": [
+		{
+			"title": "test job",
+			"description": "some effort",
+			"companyName": "fake company",
+			"location": "Mexico",
+			"startDate": "2020",
+			"endDate": "2021"
+		}
+	],
+	"skills": [
+		{
+			"name": "skill one",
+			"description": "skill detail",
+			"proficiency": "ADVANCED"
+		}
+	],
+	"lists": [
+		{
+			"name": "activities",
+			"content": "activity content"
+		}
+	],
+	"educationItems": [
+		{
+			"title": "college degree",
+			"description": "BS. in computer science",
+			"institutionName": "Harvard University",
+			"location": "USA",
+			"startDate": "2000",
+			"endDate": "2004",
+			"referenceId": "",
+			"url": ""
+		}
+	]
+}
