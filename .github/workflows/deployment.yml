@@ -18,4 +18,8 @@ jobs:
           go-version: "^1.16.6" # The Go version to download (if necessary) and use.
       - name: Run Build
         run: ./build.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: builds
+          path: build/*
 
