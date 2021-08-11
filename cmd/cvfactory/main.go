@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 type EducationItem struct {
@@ -50,16 +52,33 @@ type UserData struct {
 	EducationItems []EducationItem `json: "educationItems"`
 }
 
-func main() {
-	file, _ := ioutil.ReadFile("sample-data.json")
+func FillTemplate(dataPath string, templatePath string) {
+	file, _ := ioutil.ReadFile(dataPath)
 	data := UserData{}
 	_ = json.Unmarshal([]byte(file), &data)
 
-	tmpl := template.Must(template.ParseFiles("example/index.html"))
-	cv, err := os.Create("example/output.html")
+	tmpl := template.Must(template.ParseFiles(templatePath))
+	outputPath := filepath.Dir(templatePath) + "/output.html"
+	cv, err := os.Create(outputPath)
 	if err != nil {
 		panic(err)
 	}
 
 	tmpl.Execute(cv, data)
+	fmt.Println("Templated filled!✨")
+	fmt.Println(outputPath)
+}
+
+func main() {
+	argsWithoutProg := os.Args[1:]
+	command := argsWithoutProg[0]
+
+	if command == "fill" {
+		// "sample-data.json"
+		dataPath := argsWithoutProg[1]
+
+		// "example/index.html"
+		templatePath := argsWithoutProg[1]
+		FillTemplate(dataPath, templatePath)
+	}
 }
