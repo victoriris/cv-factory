@@ -26,6 +26,8 @@ jobs:
         with:
           name: builds
           path: build/*
+      - name: Setup Node dependencies
+        run: npm install @semantic-release/changelog @semantic-release/git -D
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
