@@ -78,7 +78,7 @@ func main() {
 		dataPath := argsWithoutProg[1]
 
 		// "example/index.html"
-		templatePath := argsWithoutProg[1]
+		templatePath := argsWithoutProg[2]
 		FillTemplate(dataPath, templatePath)
 	}
 }
