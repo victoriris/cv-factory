@@ -1,3 +1,3 @@
-module github.com/victormidp/cv-factory
+module github.com/victoridp/cv-factory
 
 go 1.16
