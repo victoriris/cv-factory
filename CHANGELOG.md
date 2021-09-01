@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/victoridp/cv-factory/compare/v1.0.2...v1.0.3) (2021-09-01)
+
+
+### Bug Fixes
+
+* fix template path arg ([24a4e90](https://github.com/victoridp/cv-factory/commit/24a4e9043aca8ea15925059dccebf46f61506982))
+
 ## [1.0.2](https://github.com/victormidp/cv-factory/compare/v1.0.1...v1.0.2) (2021-08-13)
 
 
