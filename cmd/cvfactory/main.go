@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -23,6 +24,8 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		server.ServeFiles(filepath.Dir(outpath), outputName, 3000)
+		go server.ServeFiles(filepath.Dir(outpath), outputName, 3000)
+		fmt.Println("Press Enter Key to exit")
+		fmt.Scanln()
 	}
 }
