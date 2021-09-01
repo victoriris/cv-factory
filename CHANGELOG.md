@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/victoridp/cv-factory/compare/v1.0.3...v1.1.0) (2021-09-01)
+
+
+### Features
+
+* serve output file ([50b58fb](https://github.com/victoridp/cv-factory/commit/50b58fbe74bf8b4e5af716e70b3dd95e27c0f614))
+* support exit on enter key pressed ([35c5c48](https://github.com/victoridp/cv-factory/commit/35c5c48c02d40fd3b8a653e93b133ab24f2c1f79))
+
 ## [1.0.3](https://github.com/victoridp/cv-factory/compare/v1.0.2...v1.0.3) (2021-09-01)
 
 
